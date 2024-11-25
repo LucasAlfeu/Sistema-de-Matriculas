@@ -7,6 +7,6 @@ public class Coordenador extends Docente {
     }
 
     public void pedirAberturaDisciplina() {
-        // Implementation for requesting discipline opening
+        // implementação
     }
 }

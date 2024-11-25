@@ -7,6 +7,6 @@ public class ChefeDeDepartamento extends Docente {
     }
 
     public void cadastrarDisciplina(Disciplina disciplina) {
-        // Implementation for registering a discipline
+        // implementação
     }
 }

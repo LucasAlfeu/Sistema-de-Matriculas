@@ -65,9 +65,8 @@ public class Resultado {
     }
 
     public float calcularResultado(float nota) {
-        // Implementation of grade calculation logic
         this.nota = nota;
-        this.status = nota >= 6.0f; // Example passing grade
+        this.status = nota >= 5.0f; // média 5
         return this.nota;
     }
 }

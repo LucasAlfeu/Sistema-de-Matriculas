@@ -2,25 +2,27 @@ package br.ufrrj.servlet;
 
 import java.io.IOException;
 
-import br.ufrrj.DAO.DocenteDAO;
-import br.ufrrj.model.Docente;
+import br.ufrrj.DAO.DiscenteDAO;
+import br.ufrrj.model.Discente;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class CadastrarDocente
+ * Servlet implementation class EntrarAluno
  */
-@WebServlet("/cadastrarDocente.do")
-public class CadastrarDocente extends HttpServlet {
+@WebServlet("/entrarAluno.do")
+public class EntrarAluno extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public CadastrarDocente() {
+    public EntrarAluno() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
@@ -35,21 +37,18 @@ public class CadastrarDocente extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String nome = request.getParameter("name");
 		String usuario = request.getParameter("username");
 		String senha = request.getParameter("password");
-		String identificacao = request.getParameter("registration");
-		String email = request.getParameter("email");
 		
-		Docente d = new Docente(usuario, senha, nome, identificacao);
-		DocenteDAO docenteDAO = new DocenteDAO();
-		try {
-			docenteDAO.cadastrarDocente(d);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+		DiscenteDAO discenteDAO = new DiscenteDAO();
+		Discente d = discenteDAO.buscarUsuario(usuario, senha);
+		
+		if(d != null) {
+			HttpSession session = request.getSession();
+			session.setMaxInactiveInterval(1800);
+			session.setAttribute("discente", d);
+			response.sendRedirect("http://localhost:8080/Sistema-de-Matricula/paginaAluno.jsp");
 		}
-		
-		response.sendRedirect("http://localhost:8080/Sistema-de-Matricula/entrarProfessor.jsp");
 	}
 
 }

@@ -43,5 +43,15 @@
 	<classpathentry kind="lib" path="C:/Program Files/Java/apache-tomcat-10.1.30/lib/tomcat-websocket.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/Java/apache-tomcat-10.1.30/lib/websocket-api.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/Java/apache-tomcat-10.1.30/lib/websocket-client-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/a1feu/OneDrive/Área de Trabalho/required/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/a1feu/OneDrive/Área de Trabalho/required/classmate-1.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/a1feu/OneDrive/Área de Trabalho/required/dom4j-2.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/a1feu/OneDrive/Área de Trabalho/required/geronimo-jta_1.1_spec-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/a1feu/OneDrive/Área de Trabalho/required/hibernate-commons-annotations-5.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/a1feu/OneDrive/Área de Trabalho/required/hibernate-core-5.1.17.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/a1feu/OneDrive/Área de Trabalho/required/hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/a1feu/OneDrive/Área de Trabalho/required/jandex-2.0.3.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/a1feu/OneDrive/Área de Trabalho/required/javassist-3.20.0-GA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/a1feu/OneDrive/Área de Trabalho/required/jboss-logging-3.3.0.Final.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

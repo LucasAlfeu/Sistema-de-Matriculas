@@ -22,10 +22,15 @@
         <input type="password" id="password" name="password" placeholder="Digite sua senha">
       </div>
       <div class="buttons">
-        <button type="button">Cadastrar</button>
+        <button type="button" onclick="irParaPagina()">Cadastrar</button>
         <button type="submit">Entrar</button>
       </div>
     </form>
   </div>
+   	<script>
+        function irParaPagina() {
+            window.location.href = 'cadastrarProfessor.jsp';
+        }
+    </script>
 </body>
 </html>

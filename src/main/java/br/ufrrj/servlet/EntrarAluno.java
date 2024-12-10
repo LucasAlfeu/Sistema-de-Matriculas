@@ -41,14 +41,21 @@ public class EntrarAluno extends HttpServlet {
 		String senha = request.getParameter("password");
 		
 		DiscenteDAO discenteDAO = new DiscenteDAO();
-		Discente d = discenteDAO.buscarUsuario(usuario, senha);
-		
-		if(d != null) {
-			HttpSession session = request.getSession();
-			session.setMaxInactiveInterval(1800);
-			session.setAttribute("discente", d);
-			response.sendRedirect("http://localhost:8080/Sistema-de-Matricula/paginaAluno.jsp");
+		Discente d = null;
+		try {
+			d = discenteDAO.buscarUsuario(usuario, senha);
+			if(d != null) {
+				HttpSession session = request.getSession();
+				session.setMaxInactiveInterval(1800);
+				session.setAttribute("discente", d);
+				response.sendRedirect("http://localhost:8080/Sistema-de-Matricula/paginaAluno.jsp");
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("erro: "+e.getMessage());
 		}
+		
+
 	}
 
 }

@@ -11,7 +11,7 @@ public class Conexao {
 	
 	private static Connection conn = null;
 	
-	public static Connection getConexao() throws ClassNotFoundException {
+	/**public static Connection getConexao() throws ClassNotFoundException {
 		try {
 			if (conn == null) {
 				Class.forName("com.mysql.cj.jdbc.Driver");
@@ -25,5 +25,14 @@ public class Conexao {
 			System.out.println("Erro de conexão: "+e.getErrorCode()+", "+e.getMessage());
 			return null;
 		}
+    }
+	 * @throws ClassNotFoundException */
+
+
+    // Método para estabelecer conexão com o banco de dados
+    public static Connection obterConexao() throws SQLException, ClassNotFoundException {
+    	Class.forName("com.mysql.cj.jdbc.Driver");
+        conn = DriverManager.getConnection(url, user, password);
+    	return conn;
     }
 }

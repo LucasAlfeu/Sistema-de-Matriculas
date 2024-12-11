@@ -41,14 +41,21 @@ public class EntrarDocente extends HttpServlet {
 		String senha = request.getParameter("password");
 		
 		DocenteDAO docenteDAO = new DocenteDAO();
-		Docente d = docenteDAO.buscarUsuario(usuario, senha);
-		
-		if(d != null) {
-			HttpSession session = request.getSession();
-			session.setMaxInactiveInterval(1800);
-			session.setAttribute("docente", d);
-			response.sendRedirect("http://localhost:8080/Sistema-de-Matricula/paginaProfessor.jsp");
+		Docente d;
+		try {
+			d = docenteDAO.buscarUsuario(usuario, senha);
+			if(d != null) {
+				HttpSession session = request.getSession();
+				session.setMaxInactiveInterval(1800);
+				session.setAttribute("docente", d);
+				response.sendRedirect("http://localhost:8080/Sistema-de-Matricula/paginaProfessor.jsp");
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("erro "+e.getMessage());
 		}
+		
+
 	}
 
 }

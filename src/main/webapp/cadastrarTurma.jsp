@@ -17,12 +17,16 @@
         <input type="text" id="name" name="name" placeholder="Digite o nome da disciplina">
       </div>
       <div class="form-group">
-        <label for="instructor">Carga HorÃ¡ria:</label>
-        <input type="text" id="instructor" name="instructor" placeholder="Digite a carga horÃ¡ria da disciplina">
+        <label for="instructor">Carga Horária:</label>
+        <input type="text" id="instructor" name="instructor" placeholder="Digite a carga horária da disciplina">
       </div>
       <div class="form-group">
         <label for="students">Número de Alunos:</label>
-        <input type="text" id="students" name="students" placeholder="Digite o nÃºmero de alunos na disciplina">
+        <input type="text" id="students" name="students" placeholder="Digite o número de alunos na disciplina">
+      </div>
+      <div class="form-group">
+        <label for="periodo">Período:</label>
+        <input type="number" id="periodo" name="students" placeholder="Digite o período da disciplina">
       </div>
       <div class="buttons">
         <button type="button">Cancelar</button>

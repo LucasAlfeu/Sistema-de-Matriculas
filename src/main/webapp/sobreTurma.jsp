@@ -9,49 +9,34 @@
 <body>
   <header>
     <div class="nav">
-      <a href="#">Início</a>
+      <a href="#">InÃ­cio</a>
       <a href="#">Sair</a>
     </div>
   </header>
 
   <main>
     <h1>Nome da Turma</h1>
-    <form class="form">
-      <div class="table">
-        <div class="row">
-          <span>Nome do Aluno</span>
-          <label>
-            Nota:
-            <input type="text" name="nota1">
-          </label>
+    <section class="container">
+      <section class="form">
+          <form class="renderizar">
+            <p>Aluno</p>
+            <div>
+              <label for="">Nota: </label>
+              <input type="text" name="nota">
+              <button type="submit">Cadastrar Nota</button>
+            </div>
+          </form>
+        <div class="buttons">
+          <button type="reset" onclick="irParaPágina()">Retornar</button>
         </div>
-        <div class="row">
-          <span>Nome do Aluno</span>
-          <label>
-            Nota:
-            <input type="text" name="nota2">
-          </label>
-        </div>
-        <div class="row">
-          <span>Nome do Aluno</span>
-          <label>
-            Nota:
-            <input type="text" name="nota3">
-          </label>
-        </div>
-        <div class="row">
-          <span>Nome do Aluno</span>
-          <label>
-            Nota:
-            <input type="text" name="nota4">
-          </label>
-        </div>
-      </div>
-      <div class="buttons">
-        <button type="reset">Cancelar</button>
-        <button type="submit">Cadastrar Notas</button>
-      </div>
-    </form>
+      </section>
+    </section>
   </main>
+    <script>
+        function irParaPagina() {
+            window.location.href = 'paginaProfessor.jsp';
+        }
+    </script>
+</body>
 </body>
 </html>

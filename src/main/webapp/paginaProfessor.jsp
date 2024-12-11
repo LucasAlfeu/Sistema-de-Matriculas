@@ -48,33 +48,6 @@
             <a href="./sobreTurma.jsp">Saiba Mais</a>
           </td>
         </tr>
-        <tr>
-          <td>Turma 02</td>
-          <td>Nome da Disciplina</td>
-          <td>0.0</td>
-          <td>Aprovado</td>
-          <td class="actions">
-            <a href="./sobreTurma.jsp">Saiba Mais</a>
-          </td>
-        </tr>
-        <tr>
-          <td>Turma 03</td>
-          <td>Nome da Disciplina</td>
-          <td>0.0</td>
-          <td>Aprovado</td>
-          <td class="actions">
-            <a href="./sobreTurma.jsp">Saiba Mais</a>
-          </td>
-        </tr>
-        <tr>
-          <td>Turma 04</td>
-          <td>Nome da Disciplina</td>
-          <td>0.0</td>
-          <td>Aprovado</td>
-          <td class="actions">
-            <a href="./sobreTurma.jsp">Saiba Mais</a>
-          </td>
-        </tr>
       </tbody>
     </table>
   </div>

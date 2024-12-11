@@ -1,5 +1,6 @@
 package br.ufrrj.servlet;
 
+
 import java.io.IOException;
 
 import br.ufrrj.DAO.DiscenteDAO;
@@ -56,3 +57,4 @@ public class CadastrarDiscente extends HttpServlet {
 	}
 
 }
+

@@ -1,5 +1,6 @@
 package br.ufrrj.model;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -65,6 +66,4 @@ public class Resultado {
 	public void setIdDiscente(int idDiscente) {
 		this.idDiscente = idDiscente;
 	}
-	
-	
 }

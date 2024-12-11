@@ -8,6 +8,7 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+
 	<classpathentry kind="lib" path="C:/Program Files/Java/apache-tomcat-10.1.30/lib/annotations-api.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/Java/apache-tomcat-10.1.30/lib/catalina.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/Java/apache-tomcat-10.1.30/lib/catalina-ant.jar"/>
@@ -53,5 +54,15 @@
 	<classpathentry kind="lib" path="C:/Users/a1feu/OneDrive/Área de Trabalho/required/jandex-2.0.3.Final.jar"/>
 	<classpathentry kind="lib" path="C:/Users/a1feu/OneDrive/Área de Trabalho/required/javassist-3.20.0-GA.jar"/>
 	<classpathentry kind="lib" path="C:/Users/a1feu/OneDrive/Área de Trabalho/required/jboss-logging-3.3.0.Final.jar"/>
+  
+	<classpathentry kind="lib" path="C:/Program Files/Apache Software Foundation/Tomcat 11.0/lib/servlet-api.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="https://jakarta.ee/specifications/servlet/6.0/apidocs/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/jjooa/Downloads/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jjooa/Downloads/jstl-1.2.jar(1)/jstl-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jjooa/Downloads/jsp-api-2.2.jar/jsp-api-2.2.jar"/>
+
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

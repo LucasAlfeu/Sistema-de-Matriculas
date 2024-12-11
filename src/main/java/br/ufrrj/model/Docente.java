@@ -1,6 +1,7 @@
 package br.ufrrj.model;
 
 public class Docente {
+
 	private int idDocente;
 	private String usuario;
 	private String senha;
@@ -86,6 +87,5 @@ public class Docente {
 	public void setEhChefeDeDepartamento(boolean ehChefeDeDepartamento) {
 		this.ehChefeDeDepartamento = ehChefeDeDepartamento;
 	}
-	
-	
+
 }

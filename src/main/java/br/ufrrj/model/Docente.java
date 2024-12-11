@@ -1,52 +1,91 @@
 package br.ufrrj.model;
 
 public class Docente {
-    private String nomeDocente;
-    private String identificacao;
-    private boolean ehCoordenador;
-    private boolean ehChefeDepartamento;
 
-    public Docente(String nomeDocente, String identificacao) {
-        this.nomeDocente = nomeDocente;
-        this.identificacao = identificacao;
-        this.ehCoordenador = false;
-        this.ehChefeDepartamento = false;
-    }
+	private int idDocente;
+	private String usuario;
+	private String senha;
+	private String nome;
+	private String identificacao;
+	private boolean ehCoordenador;
+	private boolean ehChefeDeDepartamento;
+	
+	public Docente() {
+		
+	}
+	
+	public Docente(String u, String s, String n, String i) {
+		this.usuario = u;
+		this.senha = s;
+		this.nome = n;
+		this.identificacao = i;
+		this.ehCoordenador = false;
+		this.ehChefeDeDepartamento = false;
+	}
+	
+	public Docente(String u, String s, String n, String i, boolean coor, boolean chefe) {
+		this.usuario = u;
+		this.senha = s;
+		this.nome = n;
+		this.identificacao = i;
+		this.ehCoordenador = coor;
+		this.ehChefeDeDepartamento = chefe;
+	}
 
-    public String getNomeDocente() {
-        return nomeDocente;
-    }
+	public int getIdDocente() {
+		return idDocente;
+	}
 
-    public void setNomeDocente(String nomeDocente) {
-        this.nomeDocente = nomeDocente;
-    }
+	public void setIdDocente(int idDocente) {
+		this.idDocente = idDocente;
+	}
 
-    public String getIdentificacao() {
-        return identificacao;
-    }
+	public String getUsuario() {
+		return usuario;
+	}
 
-    public void setIdentificacao(String identificacao) {
-        this.identificacao = identificacao;
-    }
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
 
-    public boolean isEhCoordenador() {
-        return ehCoordenador;
-    }
+	public String getSenha() {
+		return senha;
+	}
 
-    public void setEhCoordenador(boolean ehCoordenador) {
-        this.ehCoordenador = ehCoordenador;
-    }
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
-    public boolean isEhChefeDepartamento() {
-        return ehChefeDepartamento;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public void setEhChefeDepartamento(boolean ehChefeDepartamento) {
-        this.ehChefeDepartamento = ehChefeDepartamento;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public void atribuirNotaDiscente(Resultado resultado, float nota) {
-        resultado.setNota(nota);
-        resultado.calcularResultado(nota);
-    }
+	public String getIdentificacao() {
+		return identificacao;
+	}
+
+	public void setIdentificacao(String identificacao) {
+		this.identificacao = identificacao;
+	}
+
+	public boolean isEhCoordenador() {
+		return ehCoordenador;
+	}
+
+	public void setEhCoordenador(boolean ehCoordenador) {
+		this.ehCoordenador = ehCoordenador;
+	}
+
+	public boolean isEhChefeDeDepartamento() {
+		return ehChefeDeDepartamento;
+	}
+
+	public void setEhChefeDeDepartamento(boolean ehChefeDeDepartamento) {
+		this.ehChefeDeDepartamento = ehChefeDeDepartamento;
+	}
+
 }

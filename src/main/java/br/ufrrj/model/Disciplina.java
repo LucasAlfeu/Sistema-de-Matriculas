@@ -1,74 +1,94 @@
 package br.ufrrj.model;
 
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "disciplina")
 public class Disciplina {
-    private int id;
-    private String nomeDisciplina;
-    private int cargaHoraria;
-    private List<String> aulas;
-    private List<Discente> discentesMatriculados;
-    private int maxDocentes;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int idDisciplina;
+	
+	@Column(name= "nome")
+	private String nomeDisciplina;
+	
+	@Column(name= "maxAlunos")
+	private int maxAlunos;
+	
+	@Column(name= "numDiscMatriculados")
+	private int numDiscentesMatriculados;
+	
+	@Column(name= "periodo")
+	private int periodo;
+	
+	@Column(name= "cargaHoraria")
+	private int cargaHoraria;
+	
+	@Column(name= "ID_Docente_ID_Docente")
+	private int idDocente;
 
-    public Disciplina(String nomeDisciplina, int cargaHoraria, int maxDocentes) {
-        this.nomeDisciplina = nomeDisciplina;
-        this.cargaHoraria = cargaHoraria;
-        this.maxDocentes = maxDocentes;
-        this.aulas = new ArrayList<>();
-        this.discentesMatriculados = new ArrayList<>();
-    }
+	public int getIdDisciplina() {
+		return idDisciplina;
+	}
 
-    public Disciplina(int id, String nomeDisciplina, int cargaHoraria, int maxDocentes) {
-        this(nomeDisciplina, cargaHoraria, maxDocentes);
-        this.id = id;
-    }
+	public void setIdDisciplina(int idDisciplina) {
+		this.idDisciplina = idDisciplina;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public String getNomeDisciplina() {
+		return nomeDisciplina;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setNomeDisciplina(String nomeDisciplina) {
+		this.nomeDisciplina = nomeDisciplina;
+	}
 
-    public String getNomeDisciplina() {
-        return nomeDisciplina;
-    }
+	public int getMaxAlunos() {
+		return maxAlunos;
+	}
 
-    public void setNomeDisciplina(String nomeDisciplina) {
-        this.nomeDisciplina = nomeDisciplina;
-    }
+	public void setMaxAlunos(int maxAlunos) {
+		this.maxAlunos = maxAlunos;
+	}
 
-    public int getCargaHoraria() {
-        return cargaHoraria;
-    }
+	public int getNumDiscentesMatriculados() {
+		return numDiscentesMatriculados;
+	}
 
-    public void setCargaHoraria(int cargaHoraria) {
-        this.cargaHoraria = cargaHoraria;
-    }
+	public void setNumDiscentesMatriculados(int numDiscentesMatriculados) {
+		this.numDiscentesMatriculados = numDiscentesMatriculados;
+	}
 
-    public List<String> getAulas() {
-        return aulas;
-    }
+	public int getPeriodo() {
+		return periodo;
+	}
 
-    public void setAulas(List<String> aulas) {
-        this.aulas = aulas;
-    }
+	public void setPeriodo(int periodo) {
+		this.periodo = periodo;
+	}
 
-    public List<Discente> getDiscentesMatriculados() {
-        return discentesMatriculados;
-    }
+	public int getCargaHoraria() {
+		return cargaHoraria;
+	}
 
-    public void setDiscentesMatriculados(List<Discente> discentesMatriculados) {
-        this.discentesMatriculados = discentesMatriculados;
-    }
+	public void setCargaHoraria(int cargaHoraria) {
+		this.cargaHoraria = cargaHoraria;
+	}
 
-    public int getMaxDocentes() {
-        return maxDocentes;
-    }
+	public int getIdDocente() {
+		return idDocente;
+	}
 
-    public void setMaxDocentes(int maxDocentes) {
-        this.maxDocentes = maxDocentes;
-    }
+	public void setIdDocente(int idDocente) {
+		this.idDocente = idDocente;
+	}
+	
+	
+
 }

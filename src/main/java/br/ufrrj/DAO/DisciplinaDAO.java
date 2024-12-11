@@ -1,93 +1,171 @@
 package br.ufrrj.DAO;
 
-import br.ufrrj.model.Disciplina;
-import br.ufrrj.model.Discente;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufrrj.model.Disciplina;
+
 public class DisciplinaDAO {
-    private Connection connection;
+    private static final String URL = "jdbc:mysql://localhost:3308/sistema_de_matricula";
+    private static final String USUARIO = "root";
+    private static final String SENHA = "root";
 
-    public DisciplinaDAO(Connection connection) {
-        this.connection = connection;
+    private Connection obterConexao() throws SQLException, ClassNotFoundException {
+    	Class.forName("com.mysql.cj.jdbc.Driver");
+        return DriverManager.getConnection(URL, USUARIO, SENHA);
     }
-
-    public void cadastrarDisciplina(Disciplina disciplina) throws SQLException {
-        String sql = "INSERT INTO disciplina (nome_disciplina, carga_horaria, max_docentes) VALUES (?, ?, ?)";
-        
-        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setString(1, disciplina.getNomeDisciplina());
-            stmt.setInt(2, disciplina.getCargaHoraria());
-            stmt.setInt(3, disciplina.getMaxDocentes());
-            
-            stmt.executeUpdate();
-            
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next()) {
-                disciplina.setId(rs.getInt(1));
-            }
-        }
+    
+    public void cadastrarDiscilpina(Disciplina d, int idDocente) throws ClassNotFoundException {
+    	String sql = "INSERT INTO disciplina "+
+    				"(nome, maxAlunos, numDiscMatriculados, periodo, cargaHoraria, ID_Docente_ID_Docente)"+
+    				" VALUES (?,?,?,?,?,?)";
+		 Connection conn = null;
+	     PreparedStatement ps = null;
+	     
+	     try {
+	            conn = obterConexao();
+	            conn.setAutoCommit(false);
+	            ps = conn.prepareStatement(sql);
+	            
+	            ps.setString(1, d.getNomeDisciplina());
+				ps.setInt(2, d.getMaxAlunos());
+				ps.setInt(3, 0);
+				ps.setInt(4, d.getPeriodo());
+				ps.setInt(5, d.getCargaHoraria());
+				ps.setInt(6, 1);
+	            
+	            ps.executeUpdate();
+	            
+	            conn.commit();
+	            
+	            System.out.println("Discente salvo com sucesso!");
+	            
+	        } catch (SQLException e) { 
+	            if (conn != null) {
+	                try {
+	                    System.err.println("Erro ao salvar usuário. Fazendo rollback...");
+	                    conn.rollback();
+	                } catch (SQLException ex) {
+	                    ex.printStackTrace();
+	                }
+	            }
+	            e.printStackTrace();
+	        } finally {
+	            try {
+	                if (ps != null) ps.close();
+	                if (conn != null) conn.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
     }
-
-    public void atualizarDisciplina(Disciplina disciplina) throws SQLException {
-        String sql = "UPDATE disciplina SET nome_disciplina = ?, carga_horaria = ?, max_docentes = ? WHERE id = ?";
-        
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, disciplina.getNomeDisciplina());
-            stmt.setInt(2, disciplina.getCargaHoraria());
-            stmt.setInt(3, disciplina.getMaxDocentes());
-            stmt.setInt(4, disciplina.getId());
-            
-            stmt.executeUpdate();
-        }
+    
+    public List<Disciplina> buscarTodasDisciplinas() throws ClassNotFoundException {
+    	String sql = "SELECT * FROM disciplina";
+		 Connection conn = null;
+	     PreparedStatement ps = null;
+	     
+	     try {
+	            conn = obterConexao();
+	            conn.setAutoCommit(false);
+	            ps = conn.prepareStatement(sql);
+	            
+	            
+	            ResultSet rs = ps.executeQuery();
+	            List<Disciplina> lista = new ArrayList<>();
+	            while(rs.next()) {
+	            	Disciplina d = new Disciplina();
+	            	d.setIdDisciplina(rs.getInt("ID_Disciplina"));
+	            	d.setNomeDisciplina(rs.getString("nome"));
+	            	d.setMaxAlunos(rs.getInt("maxAlunos"));
+	            	d.setNumDiscentesMatriculados(rs.getInt("numDiscMatriculados"));
+	            	d.setCargaHoraria(rs.getInt("cargaHoraria"));
+	            	d.setPeriodo(rs.getInt("periodo"));
+	            	d.setIdDocente(rs.getInt("ID_Docente_ID_Docente"));
+	            	lista.add(d);
+	            }
+	            
+	            conn.commit();
+	            
+	            System.out.println("Busca de todas as disciplinas feita com sucesso!");
+	            return lista;
+	            
+	        } catch (SQLException e) { 
+	            if (conn != null) {
+	                try {
+	                    System.err.println("Erro ao buscar todas as listas. Fazendo rollback...");
+	                    conn.rollback();
+	                } catch (SQLException ex) {
+	                    ex.printStackTrace();
+	                }
+	            }
+	            e.printStackTrace();
+	        } finally {
+	            try {
+	                if (ps != null) ps.close();
+	                if (conn != null) conn.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+		return null;
     }
-
-    public void deletarDisciplina(int id) throws SQLException {
-        String sql = "DELETE FROM disciplina WHERE id = ?";
-        
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-        }
-    }
-
-    public Disciplina buscarDisciplina(int id) throws SQLException {
-        String sql = "SELECT * FROM disciplina WHERE id = ?";
-        
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            
-            if (rs.next()) {
-                return new Disciplina(
-                    rs.getInt("id"),
-                    rs.getString("nome_disciplina"),
-                    rs.getInt("carga_horaria"),
-                    rs.getInt("max_docentes")
-                );
-            }
-        }
-        return null;
-    }
-
-    public List<Disciplina> listarTodas() throws SQLException {
-        List<Disciplina> disciplinas = new ArrayList<>();
-        String sql = "SELECT * FROM disciplina";
-        
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            ResultSet rs = stmt.executeQuery();
-            
-            while (rs.next()) {
-                Disciplina disciplina = new Disciplina(
-                    rs.getInt("id"),
-                    rs.getString("nome_disciplina"),
-                    rs.getInt("carga_horaria"),
-                    rs.getInt("max_docentes")
-                );
-                disciplinas.add(disciplina);
-            }
-        }
-        return disciplinas;
+    
+    public List<Disciplina> buscaListaDeDisciplinaPorIdDocente(int idDocente) throws ClassNotFoundException{
+    	String sql = "SELECT * FROM disciplina WHERE ID_Docente_ID_Docente = ?";
+		 Connection conn = null;
+	     PreparedStatement ps = null;
+	     
+	     try {
+	            conn = obterConexao();
+	            conn.setAutoCommit(false);
+	            ps = conn.prepareStatement(sql);
+	            
+	            ps.setInt(1, idDocente);
+	            
+	            ResultSet rs = ps.executeQuery();
+	            List<Disciplina> lista = new ArrayList<>();
+	            while(rs.next()) {
+	            	Disciplina d = new Disciplina();
+	            	d.setIdDisciplina(rs.getInt("ID_Disciplina"));
+	            	d.setNomeDisciplina(rs.getString("nome"));
+	            	d.setMaxAlunos(rs.getInt("maxAlunos"));
+	            	d.setNumDiscentesMatriculados(rs.getInt("numDiscMatriculados"));
+	            	d.setCargaHoraria(rs.getInt("cargaHoraria"));
+	            	d.setPeriodo(rs.getInt("periodo"));
+	            	d.setIdDocente(idDocente);
+	            	lista.add(d);
+	            }
+	            
+	            conn.commit();
+	            
+	            System.out.println("Discente salvo com sucesso!");
+	            return lista;
+	            
+	        } catch (SQLException e) { 
+	            if (conn != null) {
+	                try {
+	                    System.err.println("Erro ao salvar usuário. Fazendo rollback...");
+	                    conn.rollback();
+	                } catch (SQLException ex) {
+	                    ex.printStackTrace();
+	                }
+	            }
+	            e.printStackTrace();
+	        } finally {
+	            try {
+	                if (ps != null) ps.close();
+	                if (conn != null) conn.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+		return null;
     }
 }
+

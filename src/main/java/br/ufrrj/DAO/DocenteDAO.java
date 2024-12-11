@@ -1,67 +1,198 @@
 package br.ufrrj.DAO;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import br.ufrrj.connection.Conexao;
+import br.ufrrj.model.Discente;
 import br.ufrrj.model.Docente;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DocenteDAO {
-    private Connection connection;
+	
+    // Configurações de conexão com o banco de dados
+    private static final String URL = "jdbc:mysql://localhost:3308/sistema_de_matricula";
+    private static final String USUARIO = "root";
+    private static final String SENHA = "root";
 
-    public DocenteDAO(Connection connection) {
-        this.connection = connection;
+    // Método para estabelecer conexão com o banco de dados
+    private Connection obterConexao() throws SQLException, ClassNotFoundException {
+    	Class.forName("com.mysql.cj.jdbc.Driver");
+        return DriverManager.getConnection(URL, USUARIO, SENHA);
     }
-
-    public void cadastrarDocente(Docente docente) throws SQLException {
-        String sql = "INSERT INTO docente (nome_docente, identificacao, eh_coordenador, eh_chefe_departamento) VALUES (?, ?, ?, ?)";
         
-        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setString(1, docente.getNomeDocente());
-            stmt.setString(2, docente.getIdentificacao());
-            stmt.setBoolean(3, docente.isEhCoordenador());
-            stmt.setBoolean(4, docente.isEhChefeDepartamento());
-            stmt.executeUpdate();
-        }
-    }
-
-    public void atualizarDocente(Docente docente) throws SQLException {
-        String sql = "UPDATE docente SET nome_docente = ?, eh_coordenador = ?, eh_chefe_departamento = ? WHERE identificacao = ?";
-        
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, docente.getNomeDocente());
-            stmt.setBoolean(2, docente.isEhCoordenador());
-            stmt.setBoolean(3, docente.isEhChefeDepartamento());
-            stmt.setString(4, docente.getIdentificacao());
-            stmt.executeUpdate();
-        }
-    }
-
-    public void deletarDocente(String identificacao) throws SQLException {
-        String sql = "DELETE FROM docente WHERE identificacao = ?";
-        
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, identificacao);
-            stmt.executeUpdate();
-        }
-    }
-
-    public Docente buscarDocente(String identificacao) throws SQLException {
-        String sql = "SELECT * FROM docente WHERE identificacao = ?";
-        
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, identificacao);
-            ResultSet rs = stmt.executeQuery();
-            
-            if (rs.next()) {
-                Docente docente = new Docente(
-                    rs.getString("nome_docente"),
-                    rs.getString("identificacao")
-                );
-                docente.setEhCoordenador(rs.getBoolean("eh_coordenador"));
-                docente.setEhChefeDepartamento(rs.getBoolean("eh_chefe_departamento"));
-                return docente;
+	public void cadastrarDocente(Docente d) throws ClassNotFoundException {
+		String sql = "INSERT INTO docente (usuario, senha, nome, identificacao) VALUES (?,?,?,?)";
+		 Connection conn = null;
+	     PreparedStatement ps = null;
+		
+		try {
+            conn = obterConexao();
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, d.getUsuario());
+			ps.setString(2, d.getSenha());
+			ps.setString(3, d.getNome());
+			ps.setString(4, d.getIdentificacao());
+			
+            ps.executeUpdate();
+            conn.commit();
+            System.out.println("Docente cadastrado com sucesso!");
+		} catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    System.err.println("Erro ao salvar usuário. Fazendo rollback...");
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
-        return null;
+	}
+	
+	public Docente buscarUsuario(String usuario, String senha) throws ClassNotFoundException {
+		String sql = "SELECT * FROM docente WHERE usuario = ? AND senha = ?";
+		
+		 Connection conn = null;
+	     PreparedStatement ps = null;
+		try{
+            conn = obterConexao();
+            conn.setAutoCommit(false);
+            ps = conn.prepareStatement(sql);
+            
+			ps.setString(1, usuario);
+			ps.setString(2, senha);
+			
+			ResultSet rs = ps.executeQuery();
+			Docente d = new Docente();
+			
+			rs.next();
+			d.setIdDocente(rs.getInt("ID_Docente"));
+			d.setNome(rs.getString("nome"));
+			d.setUsuario(rs.getString("usuario"));
+			d.setSenha(rs.getString("senha"));
+			d.setEhChefeDeDepartamento(Boolean.parseBoolean(rs.getString("eh_chefe_de_departamento")));
+			d.setEhCoordenador(Boolean.parseBoolean(rs.getString("eh_coordenador")));
+			
+			conn.commit();
+			
+			
+			return d;
+		} catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    System.err.println("Erro ao salvar usuário. Fazendo rollback...");
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+		return null;
+	}
+	
+    public void atualizarCoordenador(String identificacao) throws ClassNotFoundException {
+    	String sql = "UPDATE docente "+
+    				"SET eh_coordenador = ? "+
+    				"WHERE identificacao = ?";
+    	
+    	Connection conn = null;
+	     PreparedStatement ps = null;
+	     
+	     try {
+	            conn = obterConexao();
+	            conn.setAutoCommit(false);
+	            ps = conn.prepareStatement(sql);
+	            
+	            ps.setBoolean(1, true);
+				ps.setString(2, identificacao);
+	            
+	            ps.executeUpdate();
+	            
+	            conn.commit();
+	            
+	            System.out.println("Docente atualizado com sucesso!");
+	            
+	        } catch (SQLException e) { 
+	            if (conn != null) {
+	                try {
+	                    System.err.println("Erro ao atualizar Docente. Fazendo rollback...");
+	                    conn.rollback();
+	                } catch (SQLException ex) {
+	                    ex.printStackTrace();
+	                }
+	            }
+	            e.printStackTrace();
+	        } finally {
+	            try {
+	                if (ps != null) ps.close();
+	                if (conn != null) conn.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+    }
+    
+    public void atualizarChefeDepartamento(int idDocente) throws ClassNotFoundException {
+    	String sql = "UPDATE docente "+
+    				"SET eh_chefe_de_departamento = ? "+
+    				"WHERE ID_Docente = ? and eh_coordenador = ?";
+    	
+    	Connection conn = null;
+	     PreparedStatement ps = null;
+	     
+	     try {
+	            conn = obterConexao();
+	            conn.setAutoCommit(false);
+	            ps = conn.prepareStatement(sql);
+	            
+	            ps.setBoolean(1, true);
+				ps.setInt(2, idDocente);
+				ps.setBoolean(3, false);
+	            
+	            ps.executeUpdate();
+	            
+	            conn.commit();
+	            
+	            System.out.println("Docente atualizado como Chefe de Departamento com sucesso!");
+	            
+	        } catch (SQLException e) { 
+	            if (conn != null) {
+	                try {
+	                    System.err.println("Erro ao atualizar Docente como Chefe de Departamento. Fazendo rollback...");
+	                    conn.rollback();
+	                } catch (SQLException ex) {
+	                    ex.printStackTrace();
+	                }
+	            }
+	            e.printStackTrace();
+	        } finally {
+	            try {
+	                if (ps != null) ps.close();
+	                if (conn != null) conn.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+
     }
 }

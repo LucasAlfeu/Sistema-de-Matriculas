@@ -1,21 +1,60 @@
 package br.ufrrj.servlet;
 
-import java.sql.Connection;
+
+import java.io.IOException;
 
 import br.ufrrj.DAO.DiscenteDAO;
+import br.ufrrj.model.Discente;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-public class CadastrarDiscente {
-    private DiscenteDAO discenteDAO;
-
-    public CadastrarDiscente(Connection connection) {
-        this.discenteDAO = new DiscenteDAO(connection);
+/**
+ * Servlet implementation class CadastrarDiscente
+ */
+@WebServlet("/cadastrarDiscente.do")
+public class CadastrarDiscente extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public CadastrarDiscente() {
+        super();
+        // TODO Auto-generated constructor stub
     }
 
-    public void doGet() {
-        // Implementation for GET request
-    }
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
 
-    public void doPost() {
-        // Implementation for POST request
-    }
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String nome = request.getParameter("nome");
+		String usuario = request.getParameter("username");
+		String senha = request.getParameter("password");
+		String matricula = request.getParameter("registration");
+		String email = request.getParameter("email");
+		
+		Discente d = new Discente(nome, usuario, senha, matricula, email);
+		
+		DiscenteDAO discenteDAO = new DiscenteDAO();
+		try {
+			discenteDAO.cadastrarDiscente(d);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("Erro "+e.getMessage());
+		}
+		
+		response.sendRedirect("http://localhost:8080/Sistema-de-Matricula/entrarAluno.jsp");
+	}
+
 }
+

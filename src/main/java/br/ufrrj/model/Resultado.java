@@ -1,72 +1,69 @@
 package br.ufrrj.model;
 
-import java.sql.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "discente")
 public class Resultado {
-    private int id;
-    private Disciplina disciplina;
-    private boolean status;
-    private Date data;
-    private float nota;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int idResultado;
+	
+	@Column(name = "nota")
+	private float nota;
+	
+	@Column(name = "aprovado")
+	private String status;
+	
+	@Column(name = "ID_Disciplina_ID_Disciplina")
+	private int idDisciplina;
+	
+	@Column(name = "ID_Discente_ID_Discente")
+	private int idDiscente;
 
-    public Resultado(Disciplina disciplina, Date data) {
-        this.disciplina = disciplina;
-        this.data = data;
-        this.status = false;
-        this.nota = 0.0f;
-    }
+	public int getIdResultado() {
+		return idResultado;
+	}
 
-    public Resultado(int id, Disciplina disciplina, boolean status, Date data, float nota) {
-        this.id = id;
-        this.disciplina = disciplina;
-        this.status = status;
-        this.data = data;
-        this.nota = nota;
-    }
+	public void setIdResultado(int idResultado) {
+		this.idResultado = idResultado;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public float getNota() {
+		return nota;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setNota(float nota) {
+		this.nota = nota;
+	}
 
-    public Disciplina getDisciplina() {
-        return disciplina;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public void setDisciplina(Disciplina disciplina) {
-        this.disciplina = disciplina;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    public boolean isStatus() {
-        return status;
-    }
+	public int getIdDisciplina() {
+		return idDisciplina;
+	}
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
+	public void setIdDisciplina(int idDisciplina) {
+		this.idDisciplina = idDisciplina;
+	}
 
-    public Date getData() {
-        return data;
-    }
+	public int getIdDiscente() {
+		return idDiscente;
+	}
 
-    public void setData(Date data) {
-        this.data = data;
-    }
-
-    public float getNota() {
-        return nota;
-    }
-
-    public void setNota(float nota) {
-        this.nota = nota;
-    }
-
-    public float calcularResultado(float nota) {
-        this.nota = nota;
-        this.status = nota >= 5.0f; // média 5
-        return this.nota;
-    }
+	public void setIdDiscente(int idDiscente) {
+		this.idDiscente = idDiscente;
+	}
 }
